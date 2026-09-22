@@ -1,0 +1,10 @@
+# 测试数据：手写模式用例从这里取数
+post_create:
+  title: foo
+  body: bar
+  userId: 1
+
+post_update:
+  title: foo_update
+  body: bar_update
+  userId: 1

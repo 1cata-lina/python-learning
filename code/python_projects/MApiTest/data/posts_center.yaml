@@ -1,0 +1,67 @@
+# 数据驱动用例：改这个文件就能加用例，无需写 Python 代码
+# 结构：case_name -> [request_info(接口信息), case_info(用例列表)]
+#   case_info 支持 json/data/params 请求参数、extract 提取变量、validate 断言
+
+# 获取帖子详情（基础 GET + 断言）
+get_post:
+  - request_info:
+      case_title: 获取帖子详情
+      url: /posts/1
+      method: GET
+      headers:
+        Content-Type: application/json
+    case_info:
+      - validate:
+          - eq: [ '$.id', 1 ]
+          - eq: [ '$.userId', 1 ]
+
+# 获取帖子列表（断言数量）
+list_posts:
+  - request_info:
+      case_title: 获取帖子列表
+      url: /posts
+      method: GET
+      headers:
+        Content-Type: application/json
+    case_info:
+      - params:
+        validate:
+          - length: [ '$..id', 100 ]
+
+# 创建帖子（POST + 提取返回的 id 到 extract.yaml）
+create_post:
+  - request_info:
+      case_title: 创建帖子并提取ID
+      url: /posts
+      method: POST
+      headers:
+        Content-Type: application/json
+    case_info:
+      - json:
+          title: foo
+          body: bar
+          userId: 1
+        extract:
+          post_id: $.id
+        validate:
+          - eq: [ '$.title', 'foo' ]
+          - eq: [ '$.userId', 1 ]
+
+# 更新帖子
+# 注：url 支持 ${get_extract_value(post_id)} 引用 extract.yaml 中提取的变量，
+#     在真实业务项目里（如 /orders/${get_extract_value(order_id)}/）这样用。
+#     这里 jsonplaceholder 的 POST 返回的假 id(101) 不存在，故更新固定 id=1。
+update_post:
+  - request_info:
+      case_title: 更新帖子
+      url: /posts/1
+      method: PUT
+      headers:
+        Content-Type: application/json
+    case_info:
+      - json:
+          title: foo_update
+          body: bar_update
+          userId: 1
+        validate:
+          - eq: [ '$.title', 'foo_update' ]
