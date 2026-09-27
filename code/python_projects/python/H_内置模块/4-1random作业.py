@@ -21,7 +21,7 @@ print("6.随机不重复数字3个：",f)
 g=[i for i in range(1,101)]
 c=random.shuffle(g)
 print("7.打乱顺序后的数字列表：",g)
-# 设置种子seed=10，循环10次生成(1,20)之间的随机整数，观察结果
+# 设置种子seed=10，循环10次生成(1,20)之间的随机整数，观察结果；第二次运行结果一样
 seed=10
 random.seed(seed)
 for i in range(10):
@@ -34,6 +34,7 @@ for i in range(5):
 
 def rand_code(n):
     return ''.join(random.choice('0123456789') for i in range(n))
+# **三个层级连起来读**：从 10 个数字里随机抽 1 个 → 重复抽 n 次 → 全部拼成字符串返回。
 print("10.随机验证码：",rand_code(6))
 def get_code(n):
     code = ""
