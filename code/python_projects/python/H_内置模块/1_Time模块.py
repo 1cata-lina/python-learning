@@ -8,7 +8,7 @@ time 模块用于处理时间戳、格式化时间、延时等。
 6. time.strptime()  转换为时间结构的元组
 '''
 import time
-# 路线 2：时间戳 → localtime () → 元组 → strftime () → 字符串
+# 路线 ：时间戳 → localtime () → 元组 → strftime () → 字符串
 # 取时间戳获取【当前时间戳】浮点数（从1970-01-01 UTC到现在的秒）
 ts = time.time()
 # 2. 时间戳 → localtime() → struct_time元组
@@ -16,14 +16,18 @@ tup = time.localtime(ts)
 print("时间元组：", tup)
 # 3. struct_time元组 → strftime() → 时间字符串
 s = time.strftime("%Y-%m-%d %H:%M:%S", tup)
-print("时间字符串：", s)
+s1=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+print("时间字符串s：", s)
+print("时间字符串s1：", s1)
 
-# 路线 1：字符串 → strptime () → 元组 → mktime () → 时间戳
+
+# 路线 ：字符串 → strptime () → 元组 → mktime () → 时间戳
 # struct_time元组→转时间字符串
 timeStr1 = time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())
+print("元组→转时间字符串timeStr1：", timeStr1)
 # 字符串转struct_time strptime：字符串 → 元组
 st = time.strptime(timeStr1, "%Y-%m-%d %H:%M:%S")
-
+print("字符串转struct_time元组st：", st)
 
 # 1.时间字符串
 time_str = "2026-09-26 10:00:00"
